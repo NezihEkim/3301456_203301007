@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "83170928249",
+    "project_id": "h1zenfb",
+    "storage_bucket": "h1zenfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83170928249:android:76e488a1a230f62fced6a8",
+        "android_client_info": {
+          "package_name": "com.example.h1zen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83170928249-7unkil2594hoo91k8bl7nl2mkln4os9l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHD2KXTBQN4QIvAvIR3g5k9y2ZBhnj70M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83170928249-7unkil2594hoo91k8bl7nl2mkln4os9l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

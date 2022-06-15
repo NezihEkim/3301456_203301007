@@ -9,6 +9,14 @@ import 'package:h1zen/voleybol.dart';
 import 'package:h1zen/basketbol.dart';
 import 'package:h1zen/masaTenisibireysel.dart';
 import 'package:h1zen/onay.dart';
+import 'package:h1zen/hakkında.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -123,22 +131,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Padding
                     (padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: MaterialButton(
-                    color: Colors.deepOrange[600],
-                    child: Text("Giriş Yap"),
-                    onPressed: () {
+                  child: GestureDetector(
+                    onHorizontalDragEnd: (DragEndDetails details) {
                       Navigator.pushNamed(context, '/anasayfa');
                     },
+                    child: MaterialButton(
+                      color: Colors.deepOrange[600],
+                      child: Text("Giriş Yap"),
+                      onPressed: () {
+                      },
+                    ),
                   )
                   ),
                   Padding
                     (padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: MaterialButton(
-                        color: Colors.deepOrange[600],
-                        child: Text("Hakkında"),
-                        onPressed: () {
+                      child: GestureDetector(
+                        onScaleEnd: (ScaleEndDetails details){
                           Navigator.pushNamed(context, '/hakkında');
                         },
+                        child: MaterialButton(
+                          color: Colors.deepOrange[600],
+                          child: Text("Hakkında"),
+                          onPressed: () {
+                          },
+                        ),
                       )
 
                   ),

@@ -12,8 +12,13 @@ class _OnayState extends State<Onay> {
         appBar: AppBar(
           leading: Padding(
             padding: const EdgeInsets.all(3.0),
-            child: CircleAvatar(
-              backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+            child: GestureDetector(
+              onTap: (){
+                Navigator.pushNamed(context, '/anasayfa');
+              },
+              child: CircleAvatar(
+                backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+              ),
             ),
           ),
           backgroundColor: Colors.blueGrey,
@@ -39,12 +44,17 @@ class _OnayState extends State<Onay> {
                       Padding(
                           padding: const EdgeInsets.only(top: 200.0),
                           child:
-                          MaterialButton(
-                            color: Colors.blueGrey[600],
-                            child: Text("Anasayfaya Dön"),
-                            onPressed: () {
+                          GestureDetector(
+                            onDoubleTap: (){
                               Navigator.pushNamed(context, '/anasayfa');
                             },
+                            child: MaterialButton(
+                              color: Colors.blueGrey[600],
+                              child: Text("Anasayfaya Dön"),
+                              onPressed: () {
+
+                              },
+                            ),
                           )
                       ),
                     ]

@@ -13,8 +13,13 @@ class _MasaTenisi12State extends State<MasaTenisi12> {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(3.0),
-          child: CircleAvatar(
-            backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+          child: GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, '/anasayfa');
+            },
+            child: CircleAvatar(
+              backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+            ),
           ),
         ),
         backgroundColor: Colors.blueGrey,
@@ -30,21 +35,30 @@ class _MasaTenisi12State extends State<MasaTenisi12> {
                       style: TextStyle(fontSize: 20.0)),
 
                   Padding(padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: MaterialButton(
-                        color: Colors.deepOrange[600],
-                        child: Text("Bireysel"),
-                        onPressed: () {
+                      child: GestureDetector(
+                        onLongPress:  (){
                           Navigator.pushNamed(context, '/masatenisibireysel');
                         },
+                        child: MaterialButton(
+                          color: Colors.deepOrange[600],
+                          child: Text("Bireysel"),
+                          onPressed: () {
+
+                          },
+                        ),
                       )
                   ),
                   Padding(padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: MaterialButton(
-                        color: Colors.deepOrange[600],
-                        child: Text("İkili Takım"),
-                        onPressed: () {
+                      child: GestureDetector(
+                        onLongPress: (){
                           Navigator.pushNamed(context, '/masatenisiikili');
                         },
+                        child: MaterialButton(
+                          color: Colors.deepOrange[600],
+                          child: Text("İkili Takım"),
+                          onPressed: () {
+                          },
+                        ),
                       )
                   ),
                 ]

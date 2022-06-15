@@ -13,8 +13,13 @@ class _VoleybolState extends State<Voleybol> {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(3.0),
-          child: CircleAvatar(
-            backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+          child: GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, '/anasayfa');
+            },
+            child: CircleAvatar(
+              backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+            ),
           ),
         ),
         backgroundColor: Colors.blueGrey,
