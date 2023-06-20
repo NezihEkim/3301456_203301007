@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "954058262748",
+    "project_id": "fir-23-7c27c",
+    "storage_bucket": "fir-23-7c27c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954058262748:android:a74db7ff7d8056cdef0c19",
+        "android_client_info": {
+          "package_name": "com.example.h1zen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954058262748-eqv4ucfh6ju4r24h64c7lvminudu7tep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiYDwG7rBHjZ5TX-n6wFrvonIKEVr8gi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954058262748-eqv4ucfh6ju4r24h64c7lvminudu7tep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

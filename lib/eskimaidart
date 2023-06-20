@@ -1,0 +1,186 @@
+import 'dart:math';
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:h1zen/anaSayfa.dart';
+import 'package:h1zen/file_operations.dart';
+import 'package:h1zen/futbol.dart';
+import 'package:h1zen/hakkinda.dart';
+import 'package:h1zen/masaTenisiikili.dart';
+import 'package:h1zen/masatenisi12.dart';
+import 'package:h1zen/veritabani.dart';
+import 'package:h1zen/voleybol.dart';
+import 'package:h1zen/basketbol.dart';
+import 'package:h1zen/masaTenisibireysel.dart';
+import 'package:h1zen/onay.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/widgets.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:uuid/uuid.dart';
+
+
+
+
+
+
+
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+
+
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Kayıt Otomasyonu',
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+      ),
+      initialRoute: '/',
+      routes: {
+        "/": (context) => MyHomePage(),
+        '/anasayfa'  : (context) => AnaSayfa(),
+        '/futbol'    : (context) => Futbol(),
+        '/voleybol'  : (context) => Voleybol(),
+        '/basketbol' : (context) => Basketbol(),
+        '/masatenisibireysel': (context) => MasaTenisibireysel(),
+        '/masatenisiikili' : (context) => MasaTenisiikili(),
+        '/masatenisi12': (context) => MasaTenisi12(),
+        '/onay'      : (context) => Onay(),
+        '/hakkında'  : (context) => Hakkinda(),
+        '/dosyaYaz'  : (context) => FileOperationsScreen(),
+        '/veritabani' : (context) => Veri(),
+      },
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String adSoyad = '';
+  String ogrNo = '';
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //APPBAR------
+      appBar: AppBar(
+        leading: const Padding(
+          padding: EdgeInsets.all(3.0),
+          child: CircleAvatar(
+            backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+          ),
+        ),
+        backgroundColor: Colors.blueGrey,
+        title: Text('GİRİŞ '),
+      ),
+        backgroundColor: Colors.yellow[300],
+        //BODY------
+        body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Image(
+                      image: AssetImage("Assets/imgs/selçuk.webp"),
+                    ),
+                  ),
+                  const Text('Kayıt Otomasyonuna Hoş Geldiniz',
+                      style: TextStyle(fontSize: 30.0)),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                      'Adınız ve Soyadınız:',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      width: 300,
+                      child: TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Adınız Soyadınız',
+                        ),
+                        keyboardType: TextInputType.text,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.singleLineFormatter
+                        ],
+                        onChanged: (text) {},
+                      ),
+                    ),
+                  ),
+                  const Text(
+                    'Öğrenci Numaranız:',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      width: 300,
+                      child: TextFormField(
+                        maxLength: 9,
+                        decoration: const InputDecoration(
+                          hintText: 'Öğrenci Numaranız',
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        onChanged: (text) {
+
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding
+                    (padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: MaterialButton(
+                    color: Colors.orange,
+                    child: Text("Giriş Yap"),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/anasayfa');
+                    },
+                  )
+                  ),
+                  Padding
+                    (padding: EdgeInsets.symmetric(vertical: 16.0),
+                      child: MaterialButton(
+                        color: Colors.deepOrange[600],
+                        child: Text("Hakkında"),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/hakkında');
+                        },
+                      )
+
+                  ),
+
+                ]
+            )
+        )
+    );
+  }
+}
+

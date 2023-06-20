@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:h1zen/anaSayfa.dart';
 
 class Onay extends StatefulWidget {
   @override
@@ -10,10 +11,10 @@ class _OnayState extends State<Onay> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.all(3.0),
+          leading: const Padding(
+            padding: EdgeInsets.all(3.0),
             child: CircleAvatar(
-              backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+              backgroundImage: AssetImage("assets/images/selçuk logo.jpg"),
             ),
           ),
           backgroundColor: Colors.blueGrey,
@@ -43,7 +44,14 @@ class _OnayState extends State<Onay> {
                             color: Colors.blueGrey[600],
                             child: Text("Anasayfaya Dön"),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/anasayfa');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return AnaSayfa();
+                                  },
+                                ),
+                              );
                             },
                           )
                       ),

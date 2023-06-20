@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:h1zen/masaTenisibireysel.dart';
+import 'package:h1zen/masaTenisiikili.dart';
 
 class MasaTenisi12 extends StatefulWidget {
 
@@ -14,7 +16,7 @@ class _MasaTenisi12State extends State<MasaTenisi12> {
         leading: Padding(
           padding: const EdgeInsets.all(3.0),
           child: CircleAvatar(
-            backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+            backgroundImage: AssetImage("assets/images/selçuk.webp"),
           ),
         ),
         backgroundColor: Colors.blueGrey,
@@ -34,7 +36,14 @@ class _MasaTenisi12State extends State<MasaTenisi12> {
                         color: Colors.deepOrange[600],
                         child: Text("Bireysel"),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/masatenisibireysel');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return MasaTenisibireysel();
+                              },
+                            ),
+                          );
                         },
                       )
                   ),
@@ -43,7 +52,14 @@ class _MasaTenisi12State extends State<MasaTenisi12> {
                         color: Colors.deepOrange[600],
                         child: Text("İkili Takım"),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/masatenisiikili');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return MasaTenisiikili();
+                              },
+                            ),
+                          );;
                         },
                       )
                   ),

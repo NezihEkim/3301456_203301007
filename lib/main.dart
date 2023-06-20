@@ -1,159 +1,118 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:h1zen/anaSayfa.dart';
+import 'package:h1zen/api.dart';
+import 'package:h1zen/basketbol.dart';
+import 'package:h1zen/file_operations.dart';
 import 'package:h1zen/futbol.dart';
-import 'package:h1zen/hakk%C4%B1nda.dart';
+import 'package:h1zen/masaTenisibireysel.dart';
 import 'package:h1zen/masaTenisiikili.dart';
 import 'package:h1zen/masatenisi12.dart';
-import 'package:h1zen/voleybol.dart';
-import 'package:h1zen/basketbol.dart';
-import 'package:h1zen/masaTenisibireysel.dart';
 import 'package:h1zen/onay.dart';
-import 'package:h1zen/hakkında.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart' as p;
+import 'package:h1zen/pages/adsensesView.dart';
+import 'package:h1zen/pages/dailydatasView.dart';
+import 'package:h1zen/pages/domainFirmsView.dart';
+import 'package:h1zen/pages/domainsView.dart';
+import 'package:h1zen/pages/hostingsView.dart';
+import 'package:h1zen/pages/settingsView.dart';
+import 'package:h1zen/providers/domainfirms_provider.dart';
+import 'package:h1zen/screens/adminlogin/adminlogin_screen.dart';
+import 'package:h1zen/screens/login/login_screen.dart';
+import 'package:h1zen/screens/seotalep/seotalep_screen.dart';
+import 'package:h1zen/screens/signup/signup_screen.dart';
+import 'package:h1zen/screens/welcome/welcome_screen.dart';
+import 'package:h1zen/services/auth/auth_methods.dart';
+import 'package:h1zen/services/domainfirms/firestore_domainfirms_service.dart';
+import 'package:h1zen/translations/codegen_loader.g.dart';
+import 'package:h1zen/translations/locale_keys.g.dart';
+import 'package:h1zen/veritabani.dart';
+import 'package:h1zen/voleybol.dart';
+import 'package:provider/provider.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'constants.dart';
+import 'firebase_options.dart';
 
+import 'notifiers/menu_notifier.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    EasyLocalization(
+        supportedLocales: [Locale('en', 'US'), Locale('tr', 'TR')],
+        path: 'assets/translations',
+        fallbackLocale: Locale('en', 'US'),
+        assetLoader: CodegenLoader(),
+        child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Kayıt Otomasyonu',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      initialRoute: '/',
-      routes: {
-        "/": (context) => MyHomePage(),
-        '/anasayfa'  : (context) => AnaSayfa(),
-        '/futbol'    : (context) => Futbol(),
-        '/voleybol'  : (context) => Voleybol(),
-        '/basketbol' : (context) => Basketbol(),
-        '/masatenisibireysel': (context) => MasaTenisibireysel(),
-        '/masatenisiikili' : (context) => MasaTenisiikili(),
-        '/masatenisi12': (context) => MasaTenisi12(),
-        '/onay'      : (context) => Onay(),
-        '/hakkında'  : (context) => Hakkinda(),
-      },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  String adSoyad = '';
-  String ogrNo = '';
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: CircleAvatar(
-            backgroundImage: AssetImage("assets/imgs/selçuk.webp"),
+    return MultiProvider(
+        providers: [
+          Provider<FlutterFireAuthService>(
+            create: (_) => FlutterFireAuthService(FirebaseAuth.instance),
           ),
-        ),
-        backgroundColor: Colors.blueGrey,
-        title: Text('GİRİŞ '),
-      ),
-        backgroundColor: Colors.yellow,
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Image(
-                      image: AssetImage("Assets/imgs/selçuk.webp"),
-                    ),
-                  ),
-                  Text('Kayıt Otomasyonuna Hoş Geldiniz',
-                      style: TextStyle(fontSize: 30.0)),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      'Adınız ve Soyadınız:',
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      width: 300,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: 'Adınız Soyadınız',
-                        ),
-                        keyboardType: TextInputType.text,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.singleLineFormatter
-                        ],
-                        onChanged: (text) {},
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'Öğrenci Numaranız:',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(
-                      width: 300,
-                      child: TextFormField(
-                        maxLength: 9,
-                        decoration: const InputDecoration(
-                          hintText: 'Öğrenci Numaranız',
-                        ),
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        onChanged: (text) {
+          StreamProvider(
+            create: (context) =>
+            context.read<FlutterFireAuthService>().authStateChanges,
+            initialData: null,
+          ),
+          Provider<FirestoreDomainFirmsService>(
+            create: (_) => FirestoreDomainFirmsService(),
+          ),
+          ChangeNotifierProvider(create: (context) => DomainFirmsProvider()),
+          StreamProvider(
+            create: (context) =>
+                context.read<FirestoreDomainFirmsService>().getDomainFirms(),
+            initialData: null,
+          ),
+          ChangeNotifierProvider(create: (context) => MenuDrawerNotifier()),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          debugShowCheckedModeBanner: false,
+          title: LocaleKeys.appname.tr(),
+          theme: ThemeData(
+            primaryColor: kPrimaryColor,
+            scaffoldBackgroundColor: Colors.white,
+          ),
+          home: WelcomeScreen(),
+          routes: {
+            "home": (_) => WelcomeScreen(),
+            "signup": (_) => SignUpScreen(),
+            "login": (_) => LoginScreen(),
+            "seotalep": (_) => SeoTalepScreen(),
+            "adminlogin": (_) => AdminLoginScreen(),
+            "domainfirms": (_) => DomainFirmsView(),
+            "domains": (_) => DomainsView(),
+            "hostings": (_) => HostingsView(),
+            "adsenses": (_) => AdsensesView(),
+            "dailydatas": (_) => DailyDatasView(),
+            "settings": (_) => SettingsView(),
+            "anasayfa": (_) => AnaSayfa(),
+            "futbol": (_) => Futbol(),
+            "voleybol": (_) => Voleybol(),
+            "basketbol": (_) => Basketbol(),
+            "masatenisibireysel": (_) => MasaTenisibireysel(),
+            "masatenisiikili": (_) => MasaTenisiikili(),
+            "masatenisi12": (_) => MasaTenisi12(),
+            "onay": (_) => Onay(),
+            "dosyaYaz": (_) => FileOperationsScreen(),
+            "veritabani": (_) => Veri(),
+            "ApiRenk": (_) => ApiRenk(),
 
-                        },
-                      ),
-                    ),
-                  ),
-                  Padding
-                    (padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: MaterialButton(
-                    color: Colors.deepOrange[600],
-                    child: Text("Giriş Yap"),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/anasayfa');
-                    },
-                  )
-                  ),
-                  Padding
-                    (padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: MaterialButton(
-                        color: Colors.deepOrange[600],
-                        child: Text("Hakkında"),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/hakkında');
-                        },
-                      )
 
-                  ),
-
-                ]
-            )
-        )
-    );
+          },
+        ));
   }
 }
-
